@@ -11,7 +11,7 @@ import (
 func main() {
 	bot := cfg.InitBot()
 
-	ctrs.SendLogs("Authorized on account " + bot.Self.UserName)
+	ctrs.SendLogs("Бот " + bot.Self.UserName + " успешно запущен")
 
 	u := botapi.NewUpdate(0)
 	u.Timeout = 60
@@ -21,7 +21,10 @@ func main() {
 	for update := range updates {
 		var text string
 
-		if update.CallbackQuery != nil {
+		/*
+			Перехват колбэков
+		*/
+		if update.CallbackQuery != nil { //
 
 			if update.CallbackQuery.Data == "approve" {
 				go ctrs.ApproveWhiteList(true)
@@ -30,11 +33,17 @@ func main() {
 			}
 		}
 
-		if update.Message == nil { // Игнорирование любых обновлений не касающихся сообщений
+		/*
+			Игнорирование любых обновлений не касающихся сообщений
+		*/
+		if update.Message == nil {
 			continue
 		}
 
-		if !update.Message.IsCommand() { // Игнорировать все сообщения кроме команд и управления админа
+		/*
+			Игнорировать все сообщения кроме команд
+		*/
+		if !update.Message.IsCommand() {
 			continue
 		}
 
