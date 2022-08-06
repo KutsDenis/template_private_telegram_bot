@@ -39,7 +39,7 @@ func main() {
 		}
 
 		// Команды
-		if cmd.Check(update.SentFrom().UserName) {
+		if ctrs.GetWhiteList(update.SentFrom().UserName) {
 			usr := update.SentFrom()
 
 			switch update.Message.Command() {
